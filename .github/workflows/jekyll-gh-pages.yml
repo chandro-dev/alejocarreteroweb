@@ -34,14 +34,14 @@ jobs:
         run: |
             npm install
             npm run build
-      - name: Copy static assets to Jekyll destination
-        run: |
-          cp -r ./dist/assets ./_site/assets
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./dist
           destination: ./_site
+      - name: Copy static assets to Jekyll destination
+        run: |
+            cp -r ./dist/assets ./_site/assets
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
