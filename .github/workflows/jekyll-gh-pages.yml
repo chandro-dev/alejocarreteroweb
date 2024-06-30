@@ -42,7 +42,7 @@ jobs:
           npm install
           npm run build
           cd ..
-          cp -r ./dist/* ./_site/react-app/
+          cp -r dist/* ./_site/react-app/
       
       # Setup Pages
       - name: Setup Pages
