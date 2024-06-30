@@ -43,7 +43,7 @@ jobs:
           npm run build
           mkdir _site
           cp -r ./dist/* ./_site/
-      
+
       # Setup Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -52,9 +52,8 @@ jobs:
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./
-          destination: ./_site
-      
+          source: ./dist
+          destination: ./_site   
       # Upload artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
