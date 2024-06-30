@@ -1,6 +1,5 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages with a React app
-
-name: Deploy Jekyll with React app to GitHub Pages
+# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
   # Runs on pushes targeting the default branch
@@ -29,34 +28,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      # Setup Node.js for building the React app
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      
-      # Install dependencies and build the React app
-      - name: Build React app
-        run: |
-          cd react-app
-          npm install
-          npm run build
-          cd ..
-          cp -r react-app/build/* ./_site/react-app/
-      
-      # Setup Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      
-      # Build with Jekyll
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
-      
-      # Upload artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
