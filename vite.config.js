@@ -5,4 +5,13 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   base: '/alejocarreteroweb/',
   plugins: [react()],
+  root: '.',
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: './index.html',
+      },
+    },
+  },
 })
