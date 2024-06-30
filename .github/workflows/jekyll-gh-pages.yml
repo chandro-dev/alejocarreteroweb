@@ -41,7 +41,8 @@ jobs:
         run: |
           npm install
           npm run build
-          cp -r ./dist/* ./_site/react-app/
+          mkdir _site
+          cp -r ./dist/* ./_site/
       
       # Setup Pages
       - name: Setup Pages
