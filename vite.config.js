@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: '/alejocarreteroweb/',
   plugins: [react()],
   build: {
     rollupOptions: {
       input: 'index.html',
 
     },
-    outDir:'dist'
+      outDir:'dist'
   },
 })

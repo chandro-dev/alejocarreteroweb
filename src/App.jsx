@@ -1,14 +1,11 @@
 import './App.css'
-import fotoPerfil from'./assets/image.png'
 function App() {
 
   return (
     <>
       <div>
-
-      <img src={fotoPerfil}/>
+        <h1>Te amo mucho</h1>
       </div>
-  
     </>
   )
 }
