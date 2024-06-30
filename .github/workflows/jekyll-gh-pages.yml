@@ -32,7 +32,6 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Build app React
         run: |
-            ls
             npm install
             npm run build
       - name: Build with Jekyll
