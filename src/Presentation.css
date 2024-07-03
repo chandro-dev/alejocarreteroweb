@@ -9,6 +9,12 @@
 }
 
 .imagen-enmarcada {
-    border: 5px solid #ccc; 
-    height: 200px;
+    animation: recorte 2s forwards;
+    height: 400px;
   }
+  
+  @keyframes recorte {
+    from { clip-path: circle(100% at 100% 100%); }
+    to { clip-path: circle(35% at 45% 65%); }
+  }
+  
