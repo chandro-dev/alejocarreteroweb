@@ -12,6 +12,31 @@
     animation: recorte 2s forwards;
     height: 400px;
   }
+  .textoAnimado {  
+    font-size: 3em;
+    animation: wave 1.5s infinite;
+    animation: wave 1.5s infinite, color-change 3s infinite;
+
+  }
+  .wave-text:nth-child(1) { animation-delay: 0s, 0s; }
+  .wave-text:nth-child(2) { animation-delay: 0.1s, 0.1s; }
+  .wave-text:nth-child(3) { animation-delay: 0.2s, 0.2s; }
+  
+@keyframes color-change {
+  0% {
+      color: #c300ff;
+  }
+  33% {
+      color: #6c099d;
+  }
+  66% {
+      color: #6c14b3;
+  }
+  100% {
+      color: #9900eb;
+  }
+}
+  
   
   @keyframes recorte {
     from { clip-path: circle(0% at 100% 100%); }
