@@ -1,5 +1,5 @@
 import './App.css'
-import Experience from './Experience';
+import Experience from './Experience'; 
 import HeaderSection from'./HeaderSection';
 import Presentation from './Presentation';
 import Projects from './Projects';
@@ -10,8 +10,8 @@ function App() {
         <HeaderSection></HeaderSection>
         <Presentation></Presentation>
         <Experience></Experience>
-        <Technologies></Technologies>
         <Projects></Projects>
+        <Technologies></Technologies>
       </div>
   )
 }

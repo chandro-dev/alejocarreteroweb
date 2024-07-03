@@ -1,7 +1,13 @@
 
 export default function HeaderSection() {
     return (
-        <>
-            <h1>Cabecera</h1>
-        </>)
+        <nav>
+            
+                <ul>
+                <li>Presentación</li>
+                <li>Experiencia</li>
+                <li>Proyectos</li>
+                <li>Tecnologías</li>
+                </ul>
+        </nav>)
 }
