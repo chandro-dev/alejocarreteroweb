@@ -1,0 +1,25 @@
+
+#navHeader{
+    position: sticky;
+    z-index: 2;
+    height: 3em;
+    top: 0;
+    width: 100%;
+    backdrop-filter: blur(8px);
+}
+
+#navHeader ul li{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+}
+#navHeader ul {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+}
+#navHeader li {
+    height: 1em;
+    font-size: 1.5em;
+}

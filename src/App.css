@@ -9,9 +9,8 @@ body{
   background:rgb(2, 6,23);
 }
 
-
+/*Envoltura de todo el Contenido*/
 .wrapper{
   padding-left:15%;
   padding-right:15%;
-  background-color: teal;
 }

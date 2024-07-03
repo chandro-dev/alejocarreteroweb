@@ -1,8 +1,7 @@
-
+import './HeaderSection.css'
 export default function HeaderSection() {
     return (
-        <nav>
-            
+        <nav id="navHeader"> 
                 <ul>
                 <li>Presentación</li>
                 <li>Experiencia</li>
