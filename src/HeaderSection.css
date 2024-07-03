@@ -18,8 +18,9 @@
     position: relative;
     display: flex;
     justify-content: space-around;
+    gap: 10px;
 }
 #navHeader li {
     height: 1em;
-    font-size: 1.5em;
+    font-size: 1em;
 }
