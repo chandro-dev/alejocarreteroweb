@@ -14,7 +14,7 @@
   }
   
   @keyframes recorte {
-    from { clip-path: circle(100% at 100% 100%); }
-    to { clip-path: circle(35% at 45% 65%); }
+    from { clip-path: circle(0% at 100% 100%); }
+    to { clip-path: circle(35% at 45% 55%); }
   }
   
