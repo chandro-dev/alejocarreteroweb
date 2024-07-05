@@ -4,6 +4,7 @@
     z-index: 2;
     height: 3em;
     top: 0;
+    font-size: 1.2em;
     width: 100%;
     backdrop-filter: blur(8px);
 }
@@ -12,7 +13,6 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-
 }
 #navHeader ul {
     position: relative;
@@ -21,6 +21,21 @@
     gap: 10px;
 }
 #navHeader li {
-    height: 1em;
-    font-size: 1em;
+    height: 3em;
+    transition: all 0.3s ease;
 }
+#navHeader li:hover {
+    position: relative;
+    color: transparent; 
+    text-shadow: 0 0 2em white;  
+    font-size: 1.4em;
+    font-weight: 500;
+}
+
+#navHeader ul li::before {
+    transition: all 0.5s ease;
+  }
+#navHeader span {
+    position: absolute;
+    color: white;
+  }
