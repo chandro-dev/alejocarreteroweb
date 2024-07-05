@@ -11,7 +11,7 @@ export default function Comp3(){
     return(
         <>
         <div className="node">
-            <h1>Componente3 </h1>
+            <h1>Componente 3</h1>
             <h1>Estado: <strong>{state3.componente3}</strong></h1>
             <button onClick={incrementComponente5}>Cambiar estado del componente 5</button>
             <div className="children">
