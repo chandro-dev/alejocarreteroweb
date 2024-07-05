@@ -1,16 +1,18 @@
 import './App.css'
-import Comp1 from'./comp1';
-import store from './store';
-import { Provider } from 'react-redux';
-
+import Experience from './Experience'; 
+import HeaderSection from'./HeaderSection';
+import Presentation from './Presentation';
+import Projects from './Projects';
+import Technologies from './Technologies';
 function App() {
-  //const informacion={nombre:"Alejandro",apellido:"Apellido",edad:20};
   return (
-    <Provider store={store}>
-      <div className="tree">
-        <Comp1 ></Comp1>
+      <div className='wrapper'> 
+        <HeaderSection></HeaderSection>
+        <Presentation></Presentation>
+        <Experience></Experience>
+        <Projects></Projects>
+        <Technologies></Technologies>
       </div>
-      </Provider>
   )
 }
 
