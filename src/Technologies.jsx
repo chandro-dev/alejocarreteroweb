@@ -1,4 +1,4 @@
-
+import './Techonologies.css'
 
 export default function Technologies() {
     return (
@@ -7,7 +7,7 @@ export default function Technologies() {
             <h3>
                 Tecnologias
             </h3>
-            <ul>
+            <ul id='lista-tecnologias'>
 
                 <li>
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48">
