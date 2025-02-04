@@ -1,18 +1,17 @@
 import './App.css'
-import Experience from './Experience'; 
-import HeaderSection from'./HeaderSection';
-import Presentation from './Presentation';
-import Projects from './Projects';
-import Technologies from './Technologies';
+import CV from './cv/Cv'; 
+import Home from'./Home';
+import Blog from './blog/Blog';
+import Contact from './contact/Contact';
+import { Route, Routes,Router } from 'react-router-dom';
 function App() {
   return (
-      <div className='wrapper'> 
-        <HeaderSection></HeaderSection>
-        <Presentation></Presentation>
-        <Experience></Experience>
-        <Projects></Projects>
-        <Technologies></Technologies>
-      </div>
+    <Routes>
+      <Route path="/alejocarreteroweb" element={<Home />} /> 
+      <Route path="/alejocarreteroweb/cv" element={<CV />} />
+      <Route path="/alejocarreteroweb/blog" element={<Blog />} />
+      <Route path="/alejocarreteroweb/contact" element={<Contact />} />
+    </Routes>
   )
 }
 
