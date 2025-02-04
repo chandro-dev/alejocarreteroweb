@@ -3,29 +3,9 @@ import Photo from "./../assets/image.png";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 function Cv() {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
-      {/* Toggle Button */}
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="absolute top-5 right-5 p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow-md transition-all"
-      >
-        {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
-      </button>
 
       {/* CV Container */}
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-[90%] md:w-[60%] lg:w-[40%] text-center">
@@ -105,10 +85,10 @@ function Cv() {
             Contacto
           </h2>
           <p className="mt-3 text-gray-700 dark:text-gray-300">
-            Email: alejandro@example.com
+            Email: alejandrocarreteroballesteros@gmail.com
           </p>
           <p className="mt-3 text-gray-700 dark:text-gray-300">
-            LinkedIn: linkedin.com/in/alejandro
+            <a href="https://www.linkedin.com/in/luis-alejandro-carretero-ballesteros-524835210/">LinkedIn:</a>
           </p>
         </section>
       </div>
@@ -117,4 +97,3 @@ function Cv() {
 }
 
 export default Cv;
-  
