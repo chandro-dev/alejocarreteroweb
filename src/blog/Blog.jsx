@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import post1 from '../posts/post1.md';
+import post1 from '../post/post1.md';
 
 const Blog = () => {
   const [content, setContent] = React.useState('');

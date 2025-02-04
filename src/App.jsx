@@ -1,18 +1,45 @@
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Home";
+import Blog from "./blog/Blog";
+import Cv from "./cv/Cv";
+import Contact from "./contact/Contact";
 import './App.css'
-import CV from './cv/Cv'; 
-import Home from'./Home';
-import Blog from './blog/Blog';
-import Contact from './contact/Contact';
-import { Route, Routes,Router } from 'react-router-dom';
+
 function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
+
   return (
-    <Routes>
-      <Route path="/alejocarreteroweb" element={<Home />} /> 
-      <Route path="/alejocarreteroweb/cv" element={<CV />} />
-      <Route path="/alejocarreteroweb/blog" element={<Blog />} />
-      <Route path="/alejocarreteroweb/contact" element={<Contact />} />
-    </Routes>
-  )
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
+      {/* Botón de Dark Mode */}
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="fixed top-5 right-5 p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow-md transition-all"
+      >
+        {darkMode ? "☀️" : "🌙"}
+      </button>
+
+      {/* Rutas */}
+      <Routes>
+        <Route path="/alejocarreteroweb/" element={<Home />} />
+        <Route path="/alejocarreteroweb/blog" element={<Blog />} />
+        <Route path="/alejocarreteroweb/cv" element={<Cv />} />
+        <Route path="/alejocarreteroweb/contact" element={<Contact />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

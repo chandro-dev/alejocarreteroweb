@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaSun, FaMoon, FaFileAlt, FaEnvelope, FaBlog } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function Home() {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
 
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
-    } else {    
+    } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
@@ -27,11 +27,11 @@ function Home() {
         {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
       </button>
 
-      {/* Contenedor Principal */}
+      {/* Contenido Principal */}
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-2">Bienvenido</h1>
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-6">
-          Explora mi blog, CV y formas de contacto.
+          Explora mi blog, CV y contacto.
         </p>
 
         {/* Enlaces */}
