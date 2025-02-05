@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import { useReactToPrint } from "react-to-print";
 import Photo from "./../assets/image.png";
 
 function Cv() {
@@ -13,25 +12,10 @@ function Cv() {
     }
   }, [cvRef.current]);
 
-  const handlePrint = useReactToPrint({
-    documentTitle: "CV_Alejandro_Carretero",
-    contentRef: cvRef, // ✅ Usando contentRef correctamente
-    preserveAfterPrint: false,
-    onAfterPrint: () => {
-      console.log("CV generado correctamente.");
-    },
-  });
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300 p-4">
 
-      {/* Botón para imprimir */}
-      <a
-        href="/alejocarreteroweb/CV_Alejandro_Carretero.pdf"
-        download="CV_Alejandro_Carretero.pdf"
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow"
-      >
-        📄 Descargar CV (PDF)
-      </a>
+      
 
 
       {/* Contenedor del CV */}
@@ -140,7 +124,16 @@ function Cv() {
             </a>
           </p>
         </section>
+        
       </div>
+      {/* Botón para imprimir */}
+      <a
+        href="/alejocarreteroweb/CV_Alejandro_Carretero.pdf"
+        download="CV_Alejandro_Carretero.pdf"
+        className="px-4 m-2 text-2xl py-2 p-2 bg-blue-600 text-white rounded-lg shadow"
+      >
+        📄 Descargar CV (PDF)
+      </a>
     </div>
   );
 }
