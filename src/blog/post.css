@@ -1,0 +1,51 @@
+:root {
+    --code-bg-light: rgb(215, 215, 218);
+    --code-bg-dark: #1e1e1e;
+    --code-text-light: #000;
+    --code-text-dark: #57ec6e;
+  }
+  
+  .prose {
+    max-width: 800px;
+  }
+  
+  /* Código en línea */
+  .prose code {
+    background-color: var(--code-bg-light);
+    color: var(--code-text-light);
+    font-family: "Fira Code", monospace;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .dark .prose code {
+    background-color: var(--code-bg-dark);
+    color: var(--code-text-dark);
+  }
+  
+  /* Bloques de código */
+  .prose pre {
+    background-color: var(--code-bg-light);
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 1rem;
+  }
+  
+  .dark .prose pre {
+    background-color: var(--code-bg-dark);
+  }
+  
+  /* Blockquote */
+  .prose blockquote {
+    border-left: 4px solid #00bcd4;
+    padding-left: 16px;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .dark .prose blockquote {
+    color: #bbb;
+  }
+  

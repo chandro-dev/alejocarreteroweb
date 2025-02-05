@@ -1,5 +1,12 @@
 @import "tailwindcss";
+
+
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* src/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Asegurar transiciones suaves */
 html {

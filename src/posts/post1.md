@@ -1,16 +1,15 @@
----
-title: "Mi Primer Post"
-date: "2023-10-25"
-author: "Tu Nombre"
----
 
-# ¡Hola Mundo!
+# Primer post
+date: "2023-10-25"
+author: "Alejandro Carretero"
+
+## Scala
 
 Este es mi primer post en el blog. Estoy muy emocionado de compartir mis ideas contigo.
 
-## ¿Qué es React?
+## ¿Qué es Scala?
 
-React es una biblioteca de JavaScript para construir interfaces de usuario. Es increíblemente popular y se utiliza en muchas aplicaciones modernas.
+
 
 ### Algunas características de React:
 
@@ -20,7 +19,7 @@ React es una biblioteca de JavaScript para construir interfaces de usuario. Es i
 
 ## Código de Ejemplo
 
-Aquí tienes un ejemplo de un componente en React:
+> Aquí tienes un ejemplo de un componente en React:
 
 ```javascript
 function Saludo() {

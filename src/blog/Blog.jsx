@@ -1,21 +1,16 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import post1 from '../post/post1.md';
+import BlogPost from "./blogPost";
 
-const Blog = () => {
-  const [content, setContent] = React.useState('');
-
-  React.useEffect(() => {
-    fetch(post1)
-      .then((res) => res.text())
-      .then((text) => setContent(text));
-  }, []);
-
+function Blog() {
   return (
-    <div className="blog-container">
-      <ReactMarkdown>{content}</ReactMarkdown>
+    <div className="bg-gray-100 min-h-screen dark:bg-gray-900 text-gray-900 dark:text-white">
+      <header className="bg-blue-500 p-4 text-white text-center">
+        <h1 className="text-4xl font-bold">Mi Blog</h1>
+        <p className="mt-2">Bienvenido a mi blog personal</p>
+      </header>
+
+      <BlogPost />
     </div>
   );
-};
+}
 
 export default Blog;

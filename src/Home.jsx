@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaSun, FaMoon, FaFileAlt, FaEnvelope, FaBlog } from "react-icons/fa";
+import { FaFileAlt, FaEnvelope, FaBlog } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -19,13 +19,7 @@ function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
-      {/* Botón de Dark Mode */}
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="absolute top-5 right-5 p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow-md transition-all"
-      >
-        {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
-      </button>
+ 
 
       {/* Contenido Principal */}
       <div className="text-center">
