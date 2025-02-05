@@ -128,7 +128,7 @@ function Cv() {
           <p className="text-gray-700 dark:text-gray-300">Email: alejandrocarreteroballesteros@gmail.com</p>
           <p className="text-gray-700 dark:text-gray-300">
             <a
-              href="https://www.linkedin.com/in/luis-alejandro-carretero-ballesteros-524835210/"
+              href="https://www.linkedin.com/in/luis-alejandro-carretero/"
               className="text-blue-600 hover:underline"
             >
               LinkedIn
