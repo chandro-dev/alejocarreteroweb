@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Blog from "./blog/Blog";
 import Cv from "./cv/Cv";
-import Contact from "./contact/Contact";
 import './style.css'
 import { FaSun, FaMoon} from "react-icons/fa";
 
@@ -38,7 +37,6 @@ function App() {
         <Route path="/alejocarreteroweb/" element={<Home />} />
         <Route path="/alejocarreteroweb/blog" element={<Blog />} />
         <Route path="/alejocarreteroweb/cv" element={<Cv />} />
-        <Route path="/alejocarreteroweb/contact" element={<Contact />} />
       </Routes>
     </div>
   );

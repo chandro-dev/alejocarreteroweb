@@ -5,7 +5,7 @@ import Post from "./post";
 const loadMarkdown = async () => {
   // Esta es una forma de cargar el contenido Markdown.
   // En un entorno de desarrollo, puedes usar fetch o importar directamente el archivo de markdown.
-  const response = await fetch("/alejocarreteroweb/src/posts/post1.md");
+  const response = await fetch("/alejocarreteroweb/posts/post1.md");
   return await response.text();
 };
 

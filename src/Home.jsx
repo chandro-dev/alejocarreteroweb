@@ -19,7 +19,7 @@ function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300">
- 
+
 
       {/* Contenido Principal */}
       <div className="text-center">
@@ -42,13 +42,6 @@ function Home() {
             className="flex items-center gap-2 bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-800 text-white px-4 py-2 rounded-lg shadow-md transition-all"
           >
             <FaFileAlt /> CV
-          </Link>
-
-          <Link
-            to="/alejocarreteroweb/contact"
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-800 text-white px-4 py-2 rounded-lg shadow-md transition-all"
-          >
-            <FaEnvelope /> Contacto
           </Link>
         </div>
       </div>
