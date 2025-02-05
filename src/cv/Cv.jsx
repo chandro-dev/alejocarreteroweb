@@ -14,20 +14,25 @@ function Cv() {
   }, [cvRef.current]);
 
   const handlePrint = useReactToPrint({
-    documentTitle: 'Title',
-    contentRef: cvRef,
+    documentTitle: "CV_Alejandro_Carretero",
+    contentRef: cvRef, // ✅ Usando contentRef correctamente
+    preserveAfterPrint: false,
+    onAfterPrint: () => {
+      console.log("CV generado correctamente.");
+    },
   });
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300 p-4">
-      
+
       {/* Botón para imprimir */}
-      <button
-        onClick={handlePrint}
-        disabled={!isReady}
-        className="mb-6 px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 disabled:opacity-50"
+      <a
+        href="/alejocarreteroweb/CV_Alejandro_Carretero.pdf"
+        download="CV_Alejandro_Carretero.pdf"
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow"
       >
-        📄 Descargar CV en PDF
-      </button>
+        📄 Descargar CV (PDF)
+      </a>
+
 
       {/* Contenedor del CV */}
       <div
@@ -61,7 +66,7 @@ function Cv() {
             Sobre mí
           </h2>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            Soy estudiante de Ingeniería de Sistemas (8vo semestre) en la Universidad Popular del Cesar y Tecnólogo en Sistemas del SENA. 
+            Soy estudiante de Ingeniería de Sistemas (8vo semestre) en la Universidad Popular del Cesar y Tecnólogo en Sistemas del SENA.
             Actualmente trabajo como Ingeniero de Datos en Bluetab, con experiencia en el desarrollo y automatización de procesos ETL.
           </p>
         </section>
