@@ -1,84 +1,48 @@
-import { useRef, useState, useEffect } from "react";
 import Photo from "./../assets/image.png";
+import { FaDownload } from "react-icons/fa";
 
 function Cv() {
-  const cvRef = useRef();
-  const [isReady, setIsReady] = useState(false);
 
-  // Comprobar si el componente está listo para imprimir
-  useEffect(() => {
-    if (cvRef.current) {
-      setIsReady(true); // Marca el componente como listo una vez se haya renderizado
-    }
-  }, [cvRef.current]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300 p-4">
-
-      
-
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300 p-6 print:bg-white">
 
       {/* Contenedor del CV */}
       <div
-        ref={cvRef}
-        className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-2xl text-center print:shadow-none print:p-4"
+        className="bg-white dark:bg-gray-800 p-10 rounded-3xl shadow-2xl w-full max-w-4xl text-center print:shadow-none print:p-4 print:border-none print:rounded-none"
       >
-        {/* Imagen de Perfil */}
-        <div className="flex justify-center mb-6">
+        {/* Imagen y Título */}
+        <div className="flex flex-col items-center mb-8">
           <img
             src={Photo}
             alt="Profile"
-            className="w-32 h-32 rounded-full shadow-lg"
+            className="w-36 h-36 rounded-full shadow-md border-4 border-blue-600 mb-4"
           />
+          <h1 className="text-4xl font-bold text-blue-700 dark:text-blue-400">Alejandro Carretero</h1>
+          <p className="text-lg text-gray-600 dark:text-gray-400">Ingeniero de Datos | Desarrollador Web</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">📞 +57 3108167406</p>
         </div>
 
-        {/* Header */}
-        <header className="mb-6">
-          <h1 className="text-3xl font-bold">Alejandro Carretero</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">
-            Ingeniero de Datos | Desarrollador Web
-          </p>
-          {/* Teléfono */}
-          <p className="text-gray-500 dark:text-gray-400 mt-1">
-            +57 3108167406
-          </p>
-        </header>
-
-        {/* Sección Sobre Mí */}
-        <section className="mb-6 text-left">
-          <h2 className="text-xl font-semibold border-b border-gray-300 pb-2 mb-2">
-            Sobre mí
-          </h2>
+        {/* Sobre Mí */}
+        <section className="text-left mb-8">
+          <h2 className="text-2xl font-semibold border-b pb-2 border-blue-500 mb-3">🧠 Sobre mí</h2>
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
             Soy estudiante de Ingeniería de Sistemas (8vo semestre) en la Universidad Popular del Cesar y Tecnólogo en Sistemas del SENA.
             Actualmente trabajo como Ingeniero de Datos en Bluetab, con experiencia en el desarrollo y automatización de procesos ETL.
           </p>
         </section>
 
-        {/* Sección Habilidades */}
-        <section className="mb-6 text-left">
-          <h2 className="text-xl font-semibold border-b border-gray-300 pb-2 mb-2">
-            Habilidades
-          </h2>
-          <ul className="flex flex-wrap gap-2">
+        {/* Habilidades */}
+        <section className="text-left mb-8">
+          <h2 className="text-2xl font-semibold border-b pb-2 border-blue-500 mb-3">🛠️ Habilidades</h2>
+          <ul className="flex flex-wrap gap-3">
             {[
-              "React",
-              "JavaScript",
-              "Node.js",
-              "Python",
-              "SQL",
-              "Docker",
-              "AWS",
-              "Linux",
-              "Apache Spark",
-              "Hadoop",
-              "Athena",
-              "Glue",
-              "Control-M"
+              "React", "JavaScript", "Node.js", "Python", "SQL", "Docker",
+              "AWS", "Linux", "Apache Spark", "Hadoop", "Athena", "Glue", "Control-M"
             ].map((skill) => (
               <li
                 key={skill}
-                className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm"
+                className="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-white px-4 py-1 rounded-full text-sm font-medium shadow-sm"
               >
                 {skill}
               </li>
@@ -86,53 +50,41 @@ function Cv() {
           </ul>
         </section>
 
-        {/* Sección Experiencia */}
-        <section className="mb-6 text-left">
-          <h2 className="text-xl font-semibold border-b border-gray-300 pb-2 mb-2">
-            Experiencia
-          </h2>
+        {/* Experiencia */}
+        <section className="text-left mb-8">
+          <h2 className="text-2xl font-semibold border-b pb-2 border-blue-500 mb-3">💼 Experiencia</h2>
           <div className="space-y-4">
             <div>
+              <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400">Bluetab (2024-1 - Actualidad)</h3>
               <p className="text-gray-700 dark:text-gray-300">
-                <strong>Bluetab (2024-1 - Actualidad)</strong>
-                <br />
-                Soy capacitador de diferentes herramientas de desarrollo, abarcando todo el ecosistema de Apache Spark. Además, soy líder técnico de un equipo encargado de documentar procesos ETL, manejando tecnologías como Apache Spark, Hadoop, AWS, Athena, Glue y Control-M.
+                Capacitador en herramientas del ecosistema Apache Spark y líder técnico documentando procesos ETL con tecnologías como Spark, Hadoop, AWS, Athena, Glue y Control-M.
               </p>
             </div>
             <div>
+              <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400">Prácticas Profesionales SENA (2023-7 - 2024-1)</h3>
               <p className="text-gray-700 dark:text-gray-300">
-                <strong>Prácticas Profesionales SENA (2023-7 - 2024-1)</strong>
-                <br />
-                Como aprendiz SENA, desarrollé procesos ETL en diferentes equipos, adquiriendo experiencia en la automatización y optimización de tareas.
+                Desarrollo de procesos ETL y automatización de tareas en varios equipos.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Sección Contacto */}
+        {/* Contacto */}
         <section className="text-left">
-          <h2 className="text-xl font-semibold border-b border-gray-300 pb-2 mb-2">
-            Contacto
-          </h2>
-          <p className="text-gray-700 dark:text-gray-300">Email: alejandrocarreteroballesteros@gmail.com</p>
-          <p className="text-gray-700 dark:text-gray-300">
-            <a
-              href="https://www.linkedin.com/in/luis-alejandro-carretero/"
-              className="text-blue-600 hover:underline"
-            >
-              LinkedIn
-            </a>
-          </p>
+          <h2 className="text-2xl font-semibold border-b pb-2 border-blue-500 mb-3">📬 Contacto</h2>
+          <p className="text-gray-700 dark:text-gray-300">Email: <a className="text-blue-600 hover:underline" href="mailto:alejandrocarreteroballesteros@gmail.com">alejandrocarreteroballesteros@gmail.com</a></p>
+          <p className="text-gray-700 dark:text-gray-300">LinkedIn: <a className="text-blue-600 hover:underline" href="https://www.linkedin.com/in/luis-alejandro-carretero/" target="_blank" rel="noopener noreferrer">/luis-alejandro-carretero</a></p>
         </section>
-        
       </div>
-      {/* Botón para imprimir */}
+
+      {/* Botón para descargar PDF */}
       <a
         href="/alejocarreteroweb/CV_Alejandro_Carretero.pdf"
         download="CV_Alejandro_Carretero.pdf"
-        className="px-4 m-2 text-2xl py-2 p-2 bg-blue-600 text-white rounded-lg shadow"
+        className="flex items-center gap-2 mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-all"
       >
-        📄 Descargar CV (PDF)
+        <FaDownload />
+        Descargar CV (PDF)
       </a>
     </div>
   );
