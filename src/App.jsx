@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
-import Blog from "./blog/Blog";
 import Cv from "./cv/Cv";
+import ProjectsPage from"./proyectos/proyectos";
 import './style.css'
 import { FaSun, FaMoon} from "react-icons/fa";
 
@@ -35,8 +35,9 @@ function App() {
       {/* Rutas */}
       <Routes>
         <Route path="/alejocarreteroweb/" element={<Home />} />
-        <Route path="/alejocarreteroweb/blog" element={<Blog />} />
         <Route path="/alejocarreteroweb/cv" element={<Cv />} />
+        <Route path="/alejocarreteroweb/Proyectos" element={<ProjectsPage />} />
+
       </Routes>
     </div>
   );
