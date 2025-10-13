@@ -73,7 +73,7 @@ const EDUCATION = [
 ];
 
 const PROJECT_LINKS = [
-  { label: "Portafolio / Proyectos", href: "/proyectos" },
+  { label: "Portafolio / Proyectos", href: "/alejocarreteroweb/proyectos" },
 ];
 
 function SectionTitle({ children }) {

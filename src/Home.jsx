@@ -19,7 +19,7 @@ import Photo from "./assets/image.png";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
-import { ProjectsGrid, GitHubStats, RecentCommits } from "./componentes/github/widgets";
+import { GitHubStats, RecentCommits } from "./componentes/github/widgets";
 
 // -----------------------------
 // DATA
@@ -159,15 +159,6 @@ export default function Home() {
         ))}
       </motion.section>
 
-      {/* PROJECTS */}
-      <motion.section
-        {...fadeUp(0.15)}
-        className="w-full max-w-6xl mt-14"
-        aria-labelledby="proyectos-title"
-      >
-        <GitHubStats username="chandro-dev" />
-        <RecentCommits username="chandro-dev" limit={12} />
-      </motion.section>
 
       {/* TECH CAROUSEL */}
       <section className="w-full max-w-6xl mt-14" aria-labelledby="tech-title">
@@ -213,7 +204,7 @@ export default function Home() {
           </div>
           <div className="flex gap-3">
             <Link
-              to="/contacto"
+              to="/alejocarreteroweb/contacto"
               className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl shadow-lg"
             >
               Hablemos <FaArrowRight aria-hidden />
@@ -223,6 +214,16 @@ export default function Home() {
 
       </motion.section>
 
+
+      {/* PROJECTS */}
+      <motion.section
+        {...fadeUp(0.15)}
+        className="w-full max-w-6xl mt-14"
+        aria-labelledby="proyectos-title"
+      >
+        <GitHubStats username="chandro-dev" />
+        <RecentCommits username="chandro-dev" limit={12} />
+      </motion.section>
       {/* FOOTER */}
       <footer className="w-full max-w-6xl text-center py-10 opacity-80">
         <p className="text-sm">© {new Date().getFullYear()} Alejandro Carretero · Hecho con React, Tailwind y Framer Motion.</p>

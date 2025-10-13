@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Cv from "./cv/Cv";
-import ProjectsPage from"./proyectos/proyectos";
+import ProjectsPage from "./proyectos/proyectos";
 import './style.css'
-import { FaSun, FaMoon} from "react-icons/fa";
+import { FaSun, FaMoon } from "react-icons/fa";
+import Contacto from "./Contacto/contacto";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -19,6 +20,8 @@ function App() {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
+
+
   }, [darkMode]);
   return (
 
@@ -28,16 +31,17 @@ function App() {
       {/* Botón de Dark Mode */}
       <button
         onClick={() => setDarkMode(!darkMode)}
-        className="absolute top-5 right-5 p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow-md transition-all"
+        className="absolute top-5 right-5 p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow-md transition-all z-50"
       >
         {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
       </button>
+
       {/* Rutas */}
       <Routes>
         <Route path="/alejocarreteroweb/" element={<Home />} />
         <Route path="/alejocarreteroweb/cv" element={<Cv />} />
         <Route path="/alejocarreteroweb/Proyectos" element={<ProjectsPage />} />
-
+        <Route path="/alejocarreteroweb/contacto" element={<Contacto />} />
       </Routes>
     </div>
   );
