@@ -44,7 +44,7 @@ export default function Contacto() {
                     <div className="flex items-center gap-3">
                         <FaGithub className="text-gray-800 dark:text-white" />
                         <a
-                            href="https://github.com/alejocarretero"
+                            href="https://github.com/chandro-dev"
                             target="_blank"
                             rel="noreferrer"
                             className="hover:underline"
