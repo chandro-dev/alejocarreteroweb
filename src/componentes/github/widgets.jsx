@@ -177,41 +177,69 @@ export function GitHubStats({ username }) {
 // componente: Commits recientes
 // =========================
 export function RecentCommits({ username, limit = 12 }) {
-  const { loading, error, events } = useGithubPublicData(username);
+  const { loading, error, events, repos } = useGithubPublicData(username);
+  const repoMap = React.useMemo(() => {
+    const map = new Map();
+    for (const repo of repos) {
+      if (!repo?.full_name) continue;
+      map.set(repo.full_name.toLowerCase(), repo);
+    }
+    return map;
+  }, [repos]);
 
   if (loading) return <div className="animate-pulse h-28 bg-gray-200/60 dark:bg-gray-800/60 rounded-2xl" />;
-  if (error) return null;
+  if (error) {
+    return (
+      <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm mt-6">
+        No se pudieron cargar los commits recientes. <span className="font-mono">{error}</span>
+      </div>
+    );
+  }
 
-  // Extrae commits de PushEvent
-  const commits = [];
+  // Extrae commits de PushEvent y evita enlaces rotos a repositorios privados/inexistentes
+  const commitMap = new Map();
   for (const e of events) {
     if (e.type !== 'PushEvent') continue;
-    const repo = e.repo?.name; // 'owner/repo'
+    const repoName = e.repo?.name;
+    if (!repoName) continue;
+    const repoInfo = repoMap.get(repoName.toLowerCase());
+    if (!repoInfo) continue;
     for (const c of e.payload?.commits || []) {
-      commits.push({
-        repo,
-        sha: c.sha,
+      const sha = c.sha;
+      if (!sha) continue;
+      const key = `${repoInfo.full_name}-${sha}`;
+      if (commitMap.has(key)) continue;
+      commitMap.set(key, {
+        repo: repoInfo.name,
+        repoFullName: repoInfo.full_name,
+        repoUrl: repoInfo.html_url,
+        sha,
         message: (c.message || '').split('\n')[0],
         date: e.created_at,
-        url: `https://github.com/${repo}/commit/${c.sha}`,
       });
     }
   }
-  commits.sort((a,b) => new Date(b.date) - new Date(a.date));
-  const items = commits.slice(0, limit);
+  const items = Array.from(commitMap.values())
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, limit);
 
   return (
     <section className="w-full max-w-6xl mx-auto mt-12">
       <h3 className="text-xl font-semibold mb-4">Commits recientes</h3>
-      {items.length === 0 && <p className="text-sm text-gray-500">Sin actividad pública reciente.</p>}
+      {items.length === 0 && <p className="text-sm text-gray-500">Sin actividad publica reciente.</p>}
       <ul className="space-y-3">
         {items.map((c) => (
-          <li key={`${c.repo}-${c.sha}`} className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-xl p-4 border border-white/40 dark:border-white/10">
+          <li key={`${c.repoFullName}-${c.sha}`} className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-xl p-4 border border-white/40 dark:border-white/10">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <a href={c.url} target="_blank" rel="noreferrer" className="font-medium hover:underline">
+              <a href={`${c.repoUrl}/commit/${c.sha}`} target="_blank" rel="noreferrer" className="font-medium hover:underline">
                 {c.message || 'Commit'}
               </a>
-              <span className="text-xs text-gray-500">{timeAgo(c.date)} · {c.repo}</span>
+              <div className="flex flex-col text-right text-xs text-gray-500">
+                <span>{timeAgo(c.date)}</span>
+                <a href={c.repoUrl} target="_blank" rel="noreferrer" className="text-emerald-600 dark:text-emerald-300 hover:underline">
+                  {c.repoFullName}
+                </a>
+              </div>
             </div>
           </li>
         ))}

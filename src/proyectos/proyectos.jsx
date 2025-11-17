@@ -58,8 +58,10 @@ function normalizeFromJson(x) {
 }
 
 async function loadProjects({ username }) {
-  // 1) Intento local /projects.json
-  const local = await safeFetchJson("/projects.json", { cache: "no-store" });
+  // 1) Intento local /projects.json (respetando el base path de Vite/GitHub Pages)
+  const base = (import.meta.env?.BASE_URL ?? "/").replace(/\/+$/, "/");
+  const localUrl = `${base}projects.json`;
+  const local = await safeFetchJson(localUrl, { cache: "no-store" });
   let list = Array.isArray(local) ? local.map(normalizeFromJson) : [];
 
   // 2) Fallback a REST si está vacío
