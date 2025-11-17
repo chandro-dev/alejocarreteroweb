@@ -6,11 +6,42 @@
 //   <ProjectsGrid username="alejocarretero" max={6} />
 
 import React from 'react';
+import { FaCodeBranch, FaLaptopCode, FaRocket } from 'react-icons/fa';
 
 // =========================
 // util: fetch GitHub (REST)
 // =========================
 const GH_API = 'https://api.github.com';
+const COMMIT_REPO_ICONS = {
+  alejocarreteroweb: FaLaptopCode,
+  iss_station_project: FaRocket,
+};
+const getRepoIcon = (slug = '') => COMMIT_REPO_ICONS[slug.toLowerCase()] || FaCodeBranch;
+
+const SHORTCODE_EMOJIS = {
+  fire: '🔥',
+  zap: '⚡',
+  bug: '🐛',
+  rocket: '🚀',
+  sparkles: '✨',
+  boom: '💥',
+  wrench: '🔧',
+  hammer: '🔨',
+  package: '📦',
+  lipstick: '💄',
+  art: '🎨',
+  lock: '🔒',
+  seedling: '🌱',
+  globe_with_meridians: '🌐',
+  test_tube: '🧪',
+  test: '🧪',
+  bookmark: '🔖',
+  pencil: '✏️',
+  memo: '📝',
+};
+
+const decodeEmojiShortcodes = (text = '') =>
+  text.replace(/:([a-z0-9_+-]+):/gi, (_, key) => SHORTCODE_EMOJIS[key.toLowerCase()] || `:${key}:`);
 // Si quieres (bajo tu responsabilidad) puedes inyectar un token en build.
 // Omitelo en producción pública para no exponerlo.
 const GH_TOKEN = import.meta?.env?.VITE_GITHUB_TOKEN
@@ -41,7 +72,7 @@ function useGithubPublicData(username, { includeForks = false, maxRepos = 100 } 
       setState((s) => ({ ...s, loading: true, error: null }));
       try {
         // 1) repos públicos del usuario (1 llamada)
-        const repos = await ghFetch(`/users/${username}/repos?per_page=${maxRepos}&sort=updated`);
+        const repos = await ghFetch(`/users/chandro-dev/repos?per_page=${maxRepos}&sort=updated`);
         const filtered = (repos || [])
           .filter((r) => (includeForks ? true : !r.fork))
           .map((r) => ({
@@ -55,11 +86,12 @@ function useGithubPublicData(username, { includeForks = false, maxRepos = 100 } 
             language: r.language,
             updated_at: r.updated_at,
             archived: r.archived,
+            private: !!r.private,
+            visibility: r.visibility || (r.private ? 'private' : 'public'),
           }));
 
         // 2) eventos públicos (1 llamada) → PushEvent / PullRequestEvent / IssuesEvent
-        const events = await ghFetch(`/users/${username}/events/public?per_page=100`);
-
+        const events = await ghFetch(`/users/chandro-dev/events/public?per_page=100`);
         if (!alive) return;
         setState({ loading: false, error: null, repos: filtered, events });
       } catch (e) {
@@ -96,17 +128,150 @@ function deriveStats(repos, events) {
   // Ventana 30 días
   const now = Date.now();
   const THIRTY_D = 1000 * 60 * 60 * 24 * 30;
-  let commits30 = 0, prs30 = 0, issues30 = 0;
-  const recentEvents = (events || []).filter((e) => now - new Date(e.created_at).getTime() <= THIRTY_D);
+  let commits30 = 0, prs30 = 0, issues30 = 0, commitTotal = 0;
+  const allEvents = events || [];
+  const recentEvents = allEvents.filter((e) => now - new Date(e.created_at).getTime() <= THIRTY_D);
   for (const e of recentEvents) {
     if (e.type === 'PushEvent') commits30 += (e.payload?.commits?.length || 0);
     if (e.type === 'PullRequestEvent') prs30 += 1;
     if (e.type === 'IssuesEvent') issues30 += 1;
   }
+  for (const e of allEvents) {
+    if (e.type === 'PushEvent') commitTotal += (e.payload?.commits?.length || 0);
+  }
 
-  return { totalStars, totalForks, publicRepos, topLanguages, commits30, prs30, issues30 };
+  return { totalStars, totalForks, publicRepos, topLanguages, commits30, prs30, issues30, commitTotal };
 }
 
+function useCommitFeed(events, repos, { limit = 12, compareBatch = 6 } = {}) {
+  const repoMap = React.useMemo(() => {
+    const map = new Map();
+    for (const repo of repos) {
+      if (!repo?.full_name || repo.private) continue;
+      map.set(repo.full_name.toLowerCase(), repo);
+    }
+    return map;
+  }, [repos]);
+
+  const [compareCache, setCompareCache] = React.useState({});
+
+  React.useEffect(() => {
+    setCompareCache({});
+  }, [events]);
+
+  const commitSources = React.useMemo(() => {
+    const entries = [];
+    const missing = [];
+    const seen = new Set();
+
+    for (const e of events) {
+      if (e.type !== 'PushEvent') continue;
+      const repoName = e.repo?.name;
+      if (!repoName) continue;
+      const repoInfo = repoMap.get(repoName.toLowerCase());
+      if (!repoInfo) continue;
+      const repoSlug = (repoInfo.name || repoInfo.full_name || '').toLowerCase();
+
+      const commits = Array.isArray(e.payload?.commits) ? e.payload.commits : [];
+      if (commits.length === 0) {
+        if (e.payload?.before && e.payload?.head) {
+          missing.push({
+            key: `${repoInfo.full_name}:${e.payload.before}:${e.payload.head}`,
+            repoInfo,
+            repoSlug,
+            before: e.payload.before,
+            head: e.payload.head,
+            fallbackDate: e.created_at,
+          });
+        }
+        continue;
+      }
+
+      for (const c of commits) {
+        const sha = c.sha;
+        if (!sha) continue;
+        const key = `${repoInfo.full_name}-${sha}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        entries.push({
+          sha,
+          repoName: repoInfo.name,
+          repoFullName: repoInfo.full_name,
+          repoUrl: repoInfo.html_url,
+          repoSlug,
+          message: decodeEmojiShortcodes((c.message || '').split('\n')[0]),
+          date: e.created_at,
+        });
+      }
+    }
+
+    return { entries, missing };
+  }, [events, repoMap]);
+
+  const pendingMissing = React.useMemo(
+    () => commitSources.missing.filter((item) => !compareCache[item.key]),
+    [commitSources.missing, compareCache],
+  );
+
+  React.useEffect(() => {
+    if (!pendingMissing.length) return;
+    let alive = true;
+    const batch = pendingMissing.slice(0, compareBatch);
+
+    (async () => {
+      const updates = {};
+      for (const item of batch) {
+        try {
+          const compare = await ghFetch(`/repos/${item.repoInfo.full_name}/compare/${item.before}...${item.head}`);
+          updates[item.key] = Array.isArray(compare?.commits) ? compare.commits : [];
+        } catch (err) {
+          updates[item.key] = [];
+        }
+        if (!alive) return;
+      }
+      if (!alive) return;
+      setCompareCache((prev) => ({ ...prev, ...updates }));
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [pendingMissing, compareBatch]);
+
+  return React.useMemo(() => {
+    const map = new Map();
+    const pushEntry = (entry) => {
+      if (!entry?.sha) return;
+      const key = `${entry.repoFullName}-${entry.sha}`;
+      if (map.has(key)) return;
+      map.set(key, entry);
+    };
+
+    commitSources.entries.forEach(pushEntry);
+
+    for (const miss of commitSources.missing) {
+      const compareCommits = compareCache[miss.key] || [];
+      for (const commit of compareCommits) {
+        pushEntry({
+          sha: commit.sha,
+          repoName: miss.repoInfo.name,
+          repoFullName: miss.repoInfo.full_name,
+          repoUrl: miss.repoInfo.html_url,
+          repoSlug: miss.repoSlug,
+          message: decodeEmojiShortcodes((commit.commit?.message || '').split('\n')[0]),
+          date: commit.commit?.author?.date || miss.fallbackDate,
+        });
+      }
+    }
+
+    const sorted = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    return {
+      commits: limit > 0 ? sorted.slice(0, limit) : sorted,
+      totalCommits: sorted.length,
+    };
+  }, [commitSources.entries, commitSources.missing, compareCache, limit]);
+}
 // =========================
 // util: formateos
 // =========================
@@ -128,6 +293,8 @@ const timeAgo = (iso) => {
 export function GitHubStats({ username }) {
   const { loading, error, repos, events } = useGithubPublicData(username);
   const stats = React.useMemo(() => deriveStats(repos, events), [repos, events]);
+  const { totalCommits } = useCommitFeed(events, repos, { limit: 0, compareBatch: 4 });
+  const commitCount = totalCommits || stats.commitTotal;
 
   if (loading) return <div className="animate-pulse h-40 bg-gray-200/60 dark:bg-gray-800/60 rounded-2xl" />;
   if (error) return (
@@ -140,7 +307,7 @@ export function GitHubStats({ username }) {
     { label: '⭐ Stars', value: stats.totalStars },
     { label: '🍴 Forks', value: stats.totalForks },
     { label: '📦 Repos', value: stats.publicRepos },
-    { label: '🟩 Commits (30d)', value: stats.commits30 },
+    { label: '🟩 Commits', value: stats.commitTotal },
     { label: '🔀 PRs (30d)', value: stats.prs30 },
     { label: '❗ Issues (30d)', value: stats.issues30 },
   ];
@@ -178,14 +345,7 @@ export function GitHubStats({ username }) {
 // =========================
 export function RecentCommits({ username, limit = 12 }) {
   const { loading, error, events, repos } = useGithubPublicData(username);
-  const repoMap = React.useMemo(() => {
-    const map = new Map();
-    for (const repo of repos) {
-      if (!repo?.full_name) continue;
-      map.set(repo.full_name.toLowerCase(), repo);
-    }
-    return map;
-  }, [repos]);
+  const { commits } = useCommitFeed(events, repos, { limit });
 
   if (loading) return <div className="animate-pulse h-28 bg-gray-200/60 dark:bg-gray-800/60 rounded-2xl" />;
   if (error) {
@@ -196,53 +356,30 @@ export function RecentCommits({ username, limit = 12 }) {
     );
   }
 
-  // Extrae commits de PushEvent y evita enlaces rotos a repositorios privados/inexistentes
-  const commitMap = new Map();
-  for (const e of events) {
-    if (e.type !== 'PushEvent') continue;
-    const repoName = e.repo?.name;
-    if (!repoName) continue;
-    const repoInfo = repoMap.get(repoName.toLowerCase());
-    if (!repoInfo) continue;
-    for (const c of e.payload?.commits || []) {
-      const sha = c.sha;
-      if (!sha) continue;
-      const key = `${repoInfo.full_name}-${sha}`;
-      if (commitMap.has(key)) continue;
-      commitMap.set(key, {
-        repo: repoInfo.name,
-        repoFullName: repoInfo.full_name,
-        repoUrl: repoInfo.html_url,
-        sha,
-        message: (c.message || '').split('\n')[0],
-        date: e.created_at,
-      });
-    }
-  }
-  const items = Array.from(commitMap.values())
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, limit);
-
   return (
     <section className="w-full max-w-6xl mx-auto mt-12">
       <h3 className="text-xl font-semibold mb-4">Commits recientes</h3>
-      {items.length === 0 && <p className="text-sm text-gray-500">Sin actividad publica reciente.</p>}
+      {commits.length === 0 && <p className="text-sm text-gray-500">Sin actividad publica reciente.</p>}
       <ul className="space-y-3">
-        {items.map((c) => (
-          <li key={`${c.repoFullName}-${c.sha}`} className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-xl p-4 border border-white/40 dark:border-white/10">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <a href={`${c.repoUrl}/commit/${c.sha}`} target="_blank" rel="noreferrer" className="font-medium hover:underline">
-                {c.message || 'Commit'}
-              </a>
-              <div className="flex flex-col text-right text-xs text-gray-500">
-                <span>{timeAgo(c.date)}</span>
-                <a href={c.repoUrl} target="_blank" rel="noreferrer" className="text-emerald-600 dark:text-emerald-300 hover:underline">
-                  {c.repoFullName}
+        {commits.map((c) => {
+          const RepoIcon = getRepoIcon(c.repoSlug);
+          return (
+            <li key={`${c.repoFullName}-${c.sha}`} className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-xl p-4 border border-white/40 dark:border-white/10">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <a href={`${c.repoUrl}/commit/${c.sha}`} target="_blank" rel="noreferrer" className="font-medium hover:underline">
+                  {c.message || 'Commit'}
                 </a>
+                <div className="flex flex-col text-right text-xs text-gray-500">
+                  <span>{timeAgo(c.date)}</span>
+                  <a href={c.repoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-300 hover:underline">
+                    <RepoIcon aria-hidden className="text-base" />
+                    {c.repoFullName}
+                  </a>
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );
@@ -255,7 +392,7 @@ export function ProjectsGrid({ username, max = 6 }) {
   const { loading, error, repos } = useGithubPublicData(username);
 
   if (loading) return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-    {Array.from({length: max}).map((_,i)=> (
+    {Array.from({ length: max }).map((_, i) => (
       <div key={i} className="h-40 animate-pulse bg-gray-200/60 dark:bg-gray-800/60 rounded-2xl" />
     ))}
   </div>;
