@@ -307,7 +307,7 @@ export function GitHubStats({ username }) {
     { label: '⭐ Stars', value: stats.totalStars },
     { label: '🍴 Forks', value: stats.totalForks },
     { label: '📦 Repos', value: stats.publicRepos },
-    { label: '🟩 Commits', value: stats.commitTotal },
+    { label: '🟩 Commits', commitCount },
     { label: '🔀 PRs (30d)', value: stats.prs30 },
     { label: '❗ Issues (30d)', value: stats.issues30 },
   ];
