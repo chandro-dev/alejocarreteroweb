@@ -127,13 +127,13 @@ export default function Home() {
         {/* CTAs */}
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
           <Link
-            to="/alejocarreteroweb/cv"
+            to="/cv"
             className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white px-5 py-3 rounded-xl shadow-lg transition-all text-base"
           >
             <FaFileAlt aria-hidden /> Ver CV
           </Link>
           <Link
-            to="/alejocarreteroweb/proyectos"
+            to="/proyectos"
             className="inline-flex items-center gap-2 bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 px-5 py-3 rounded-xl shadow-lg transition-all text-base"
           >
             Explorar proyectos <FaArrowRight aria-hidden />
@@ -204,7 +204,7 @@ export default function Home() {
           </div>
           <div className="flex gap-3">
             <Link
-              to="/alejocarreteroweb/contacto"
+              to="/contacto"
               className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl shadow-lg"
             >
               Hablemos <FaArrowRight aria-hidden />

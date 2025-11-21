@@ -38,11 +38,11 @@ function App() {
 
       {/* Rutas */}
       <Routes>
-        <Route path="/alejocarreteroweb/" element={<Home />} />
-        <Route path="/alejocarreteroweb/cv" element={<Cv />} />
-        <Route path="/alejocarreteroweb/proyectos" element={<ProjectsPage />} />
-        <Route path="/alejocarreteroweb/Proyectos" element={<ProjectsPage />} />
-        <Route path="/alejocarreteroweb/contacto" element={<Contacto />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/cv" element={<Cv />} />
+        <Route path="/proyectos" element={<ProjectsPage />} />
+        <Route path="/Proyectos" element={<ProjectsPage />} />
+        <Route path="/contacto" element={<Contacto />} />
       </Routes>
     </div>
   );

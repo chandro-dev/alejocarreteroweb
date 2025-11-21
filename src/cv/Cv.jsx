@@ -19,8 +19,8 @@ const CONTACT = {
   email: "alejandrocarreteroballesteros@gmail.com",
   location: "Colombia",
   linkedin: "https://www.linkedin.com/in/luis-alejandro-carretero/",
-  github: "https://github.com/alejocarretero",
-  pdf: "/alejocarreteroweb/CV_Alejandro_Carretero.pdf",
+  github: "https://github.com/chandro-dev",
+  pdf: "/CV_Alejandro_Carretero.pdf",
 };
 
 const SUMMARY = `Construyo pipelines de datos confiables y servicios web que transforman información
@@ -73,7 +73,7 @@ const EDUCATION = [
 ];
 
 const PROJECT_LINKS = [
-  { label: "Portafolio / Proyectos", href: "/alejocarreteroweb/proyectos" },
+  { label: "Portafolio / Proyectos", href: "/proyectos" },
 ];
 
 function SectionTitle({ children }) {

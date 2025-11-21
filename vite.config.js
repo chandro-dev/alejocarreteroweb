@@ -5,7 +5,7 @@ import typography from '@tailwindcss/typography';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/alejocarreteroweb/',
+  base: '/',
   darkMode: "class", // Importante: Usa "class" en lugar de "media"
   plugins: [react(), tailwindcss({
     plugins: [typography],
